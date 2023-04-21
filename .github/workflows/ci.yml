@@ -8,7 +8,6 @@ jobs:
       # systems.
       CARGO: cargo
       # When CARGO is set to CROSS, TARGET is set to `--target matrix.target`.
-      TARGET:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
