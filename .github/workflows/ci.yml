@@ -1,32 +1,5 @@
 name: ci
-on:
-  pull_request:
-  push:
-    branches:
-    - master
-  schedule:
-  - cron: '00 01 * * *'
-
-# The section is needed to drop write-all permissions that are granted on
-# `schedule` event. By specifying any permission explicitly all others are set
-# to none. By using the principle of least privilege the damage a compromised
-# workflow can do (because of an injection or compromised third party tool or
-# action) is restricted. Currently the worklow doesn't need any additional
-# permission except for pulling the code. Adding labels to issues, commenting
-# on pull-requests, etc. may need additional permissions:
-#
-# Syntax for this section:
-# https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#permissions
-#
-# Reference for how to assign permissions on a job-by-job basis:
-# https://docs.github.com/en/actions/using-jobs/assigning-permissions-to-jobs
-#
-# Reference for available permissions that we can enable if needed:
-# https://docs.github.com/en/actions/security-guides/automatic-token-authentication#permissions-for-the-github_token
-permissions:
-  # to fetch code (actions/checkout)
-  contents: read
-
+on: push
 jobs:
   test:
     name: test
@@ -50,35 +23,19 @@ jobs:
         - win-msvc
         - win-gnu
         include:
-        - build: pinned
-          os: ubuntu-latest
-          rust: 1.60.0
+        - build: stable
+          os: buildjet-2vcpu-ubuntu-2204
+          rust: stable
         - build: stable
           os: ubuntu-latest
           rust: stable
-        - build: stable-32
-          os: ubuntu-latest
+        - build: stable
+          os: buildjet-4vcpu-ubuntu-2204
           rust: stable
-          target: i686-unknown-linux-gnu
-        - build: stable-mips
-          os: ubuntu-latest
+        - build: stable
+          os: buildjet-8vcpu-ubuntu-2204
           rust: stable
-          target: mips64-unknown-linux-gnuabi64
-        - build: beta
-          os: ubuntu-latest
-          rust: beta
-        - build: nightly
-          os: ubuntu-latest
-          rust: nightly
-        - build: macos
-          os: macos-latest
-          rust: stable
-        - build: win-msvc
-          os: windows-latest
-          rust: stable
-        - build: win-gnu
-          os: windows-latest
-          rust: stable-x86_64-gnu
+
     steps:
 
     - name: Checkout repository
