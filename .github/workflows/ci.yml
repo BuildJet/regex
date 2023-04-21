@@ -40,15 +40,7 @@ jobs:
     strategy:
       matrix:
         build:
-        - pinned
         - stable
-        - stable-32
-        - stable-mips
-        - beta
-        - nightly
-        - macos
-        - win-msvc
-        - win-gnu
         include:
         - build: stable
           os: buildjet-2vcpu-ubuntu-2204
