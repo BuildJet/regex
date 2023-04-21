@@ -29,7 +29,7 @@ permissions:
 
 jobs:
   test:
-    name: test
+    name: test ${{ matrix.os }}
     env:
       # For some builds, we use cross to test on 32-bit and big-endian
       # systems.
@@ -41,6 +41,11 @@ jobs:
       matrix:
         build:
         - stable
+        os: 
+        - buildjet-2vcpu-ubuntu-2204
+        - buildjet-4vcpu-ubuntu-2204
+        - buildjet-8vcpu-ubuntu-2204
+        - ubuntu-latest
         include:
         - build: stable
           os: buildjet-2vcpu-ubuntu-2204
